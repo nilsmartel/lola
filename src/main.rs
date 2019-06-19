@@ -1,4 +1,5 @@
 mod ast;
+mod bytecode;
 mod parse;
 
 fn main() {
