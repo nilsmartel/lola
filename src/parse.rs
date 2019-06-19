@@ -78,10 +78,10 @@ fn literal_or_expression(i: &str) -> IResult<&str, Expr> {
     let (rest, expr) = alt((
         nom::sequence::delimited(char('('), and_tree, char(')')),
         alt((
-            nom::combinator::map(alpha1, |s| Expr::Var(s.to_string())),
+            nom::combinator::map(alpha1, |s: &str| Expr::Var(s.to_string())),
             nom::combinator::map(alt((char('1'), char('0'))), |c| Expr::Const(c == '1')),
         )),
-    ))(i)?;
+    ))(rest)?;
 
     Ok((
         rest,
