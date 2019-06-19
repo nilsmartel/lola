@@ -5,7 +5,7 @@ pub enum Expr {
     Or(BE, BE),
     Impl(BE, BE),
     Biimpl(BE, BE),
-    Not(BE, BE),
+    Not(BE),
     Var(String),
     Const(bool),
 }
