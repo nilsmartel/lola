@@ -25,7 +25,7 @@ a | (1^c) | (a^b^1 -> 0)
 
 ## TODO
 - ~~implementing Parser~~
-- Bytecode generation
+- ~~Bytecode generation~~
 - implement Stack Machine to interpret bytecode
 - implement evalutuation of all possible states for expression
 - Markdown output
