@@ -6,6 +6,9 @@ use nom::character::complete::char;
 use nom::multi::separated_nonempty_list;
 use nom::IResult;
 
+// TODO change result to no longer use nom
+/// Parses an string slice into an Expression
+/// in form of an AST
 pub fn expression(i: &str) -> IResult<&str, Expr> {
     // we cheat a little here by removing all whitespace beforehand
     let i: String = i
