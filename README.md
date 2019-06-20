@@ -1,4 +1,4 @@
-# lola - Logic Expression Evaluator
+# Lola - Logic Expression Evaluator
 Parser, Compiler and Interpreted for logical expressions,
 outputting Truthtables in Markdown and CSV format.
 
