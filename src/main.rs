@@ -22,13 +22,26 @@ fn main() {
 
     // maps symbols to addresses
     let addresses = symbols
-        .into_iter()
+        .iter()
+        .cloned()
         .zip(0..)
         .collect::<HashMap<String, u8>>();
 
     let bytecode = expr.compile(&addresses);
 
-    let result = stack_machine::StackMachine::new(0, &bytecode).evaluate();
+    let results = (0u128..1 << symbols.len())
+        .into_iter()
+        .map(|bitvec| stack_machine::StackMachine::new(bitvec, &bytecode).evaluate())
+        .enumerate()
+        .map(|(code, result)| {
+            let mut row: Vec<bool> = symbols
+                .iter()
+                .map(|s| (code & 1 << addresses[s]) == 1)
+                .collect();
+            row.push(result);
+            row
+        })
+        .collect::<Vec<Vec<bool>>>();
 
-    println!("{}", result);
+    println!("{:#?}", results);
 }
