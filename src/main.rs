@@ -1,4 +1,5 @@
 mod bitvec;
+use bitvec::Bitvec;
 use bytecode::Compile;
 use std::collections::HashMap;
 mod ast;
@@ -32,12 +33,12 @@ fn main() {
 
     let results = (0u128..1 << symbols.len())
         .into_iter()
-        .map(|bitvec| stack_machine::StackMachine::new(bitvec, &bytecode).evaluate())
+        .map(|bitvec| stack_machine::StackMachine::new(Bitvec::new(bitvec), &bytecode).evaluate())
         .enumerate()
         .map(|(code, result)| {
             let mut row: Vec<bool> = symbols
                 .iter()
-                .map(|s| dbg!(code & 1 << addresses[s]) == 1)
+                .map(|s| dbg!(code & 1 << addresses[s]) > 0)
                 .collect();
             row.push(result);
             row
