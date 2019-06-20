@@ -1,4 +1,4 @@
-use bytecode::GenCode;
+use bytecode::Compile;
 use std::collections::HashMap;
 use std::io::Read;
 mod ast;
@@ -26,7 +26,7 @@ fn main() {
         .zip(0..)
         .collect::<HashMap<String, u8>>();
 
-    let bytecode = expr.gen_code(&addresses);
+    let bytecode = expr.compile(&addresses);
 
     println!("{:#?}", bytecode);
 }
