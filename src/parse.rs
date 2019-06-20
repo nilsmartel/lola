@@ -19,7 +19,10 @@ pub fn expression(i: &str) -> Result<Expr, ()> {
         .collect();
 
     match and_tree(&i) {
-        Err(_) => Err(()),
+        Err(e) => {
+            dbg!(e);
+            Err(())
+        }
         Ok((_, expr)) => Ok(expr),
     }
 }

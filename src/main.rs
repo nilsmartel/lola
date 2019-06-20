@@ -1,13 +1,12 @@
 use bytecode::Compile;
 use std::collections::HashMap;
-use std::io::Read;
 mod ast;
 mod bytecode;
 mod parse;
 
 fn main() {
     let mut input = String::new();
-    let _ = std::io::stdin().read_to_string(&mut input);
+    let _ = std::io::stdin().read_line(&mut input);
 
     let expr = parse::expression(&input).expect("Failed to parse expression");
 
