@@ -8,17 +8,21 @@ logical expressions consist of variables/symbols, the constants 0 and 1 and the 
     - Or  (|)
     - Implication (->)
     - Biimplication (<->)
-    - Not
+    - Not (-)
 
 ## Examples of Logical Expressions
 ```
+-a | a
+
+1 ^ a
+
 a -> b
 
 1 | a
 
 a ^ (b -> c)
 
-a | (1^c) | (a^b^1 -> 0)
+a | (1^c) | (a^-b^1 -> 0)
 ```
 
 ## Why is it called `lola`?
@@ -34,7 +38,7 @@ You see what I did there, `lola` is just the short form of `logiclang`.
 ## TODO
 - ~~implementing Parser~~
 - ~~Bytecode generation~~
-- implement Stack Machine to interpret bytecode
+- ~~implement Stack Machine to interpret bytecode~~
 - implement evalutuation of all possible states for expression
 - read from file
 - CLI
