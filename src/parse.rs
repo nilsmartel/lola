@@ -9,7 +9,7 @@ use nom::IResult;
 // TODO change result to no longer use nom
 /// Parses an string slice into an Expression
 /// in form of an AST
-pub fn expression(i: &str) -> IResult<&str, Expr> {
+pub fn expression(i: &str) -> Result<Expr, ()> {
     // we cheat a little here by removing all whitespace beforehand
     let i: String = i
         .chars()
@@ -19,7 +19,10 @@ pub fn expression(i: &str) -> IResult<&str, Expr> {
         })
         .collect();
 
-    and_tree(&i)
+    match and_tree(&i) {
+        Err(_) => Err(()),
+        Ok((_, expr)) => Ok(expr),
+    }
 }
 
 fn and_tree(i: &str) -> IResult<&str, Expr> {
