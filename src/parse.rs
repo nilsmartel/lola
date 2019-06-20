@@ -78,7 +78,7 @@ fn biimpl_tree(i: &str) -> IResult<&str, Expr> {
 }
 
 fn literal_or_expression(i: &str) -> IResult<&str, Expr> {
-    let (rest, neg) = nom::combinator::opt(alt((char('!'), char('-'))))(i)?;
+    let (rest, neg) = nom::combinator::opt(char('-'))(i)?;
 
     let (rest, expr) = alt((
         nom::sequence::delimited(char('('), and_tree, char(')')),

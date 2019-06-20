@@ -23,7 +23,7 @@ impl<'a> StackMachine<'a> {
         self.stack.pop().expect("Failed to pop from empty stack")
     }
 
-    fn evaluate(mut self) -> bool {
+    pub fn evaluate(mut self) -> bool {
         use Code::*;
         for op in self.operations.into_iter() {
             match *op {

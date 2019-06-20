@@ -28,5 +28,7 @@ fn main() {
 
     let bytecode = expr.compile(&addresses);
 
-    println!("{:#?}", bytecode);
+    let result = stack_machine::StackMachine::new(0, &bytecode).evaluate();
+
+    println!("{}", result);
 }
