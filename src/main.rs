@@ -3,6 +3,7 @@ use std::collections::HashMap;
 mod ast;
 mod bytecode;
 mod parse;
+mod stack_machine;
 
 fn main() {
     let mut input = String::new();
