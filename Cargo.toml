@@ -1,5 +1,5 @@
 [package]
-name = "logic"
+name = "lila"
 version = "0.1.0"
 authors = ["Nils Martel <akantorabc@yahoo.de>"]
 edition = "2018"
