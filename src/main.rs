@@ -1,3 +1,4 @@
+mod bitvec;
 use bytecode::Compile;
 use std::collections::HashMap;
 mod ast;
@@ -36,7 +37,7 @@ fn main() {
         .map(|(code, result)| {
             let mut row: Vec<bool> = symbols
                 .iter()
-                .map(|s| (code & 1 << addresses[s]) == 1)
+                .map(|s| dbg!(code & 1 << addresses[s]) == 1)
                 .collect();
             row.push(result);
             row

@@ -1,13 +1,14 @@
+use crate::bitvec::Bitvec;
 use crate::bytecode::Code;
 
 pub struct StackMachine<'a> {
-    values: u128,
+    values: Bitvec,
     operations: &'a Vec<Code>,
     stack: Vec<bool>,
 }
 
 impl<'a> StackMachine<'a> {
-    pub fn new(values: u128, operations: &'a Vec<Code>) -> StackMachine<'a> {
+    pub fn new(values: Bitvec, operations: &'a Vec<Code>) -> StackMachine<'a> {
         StackMachine {
             values,
             operations,
@@ -52,7 +53,7 @@ impl<'a> StackMachine<'a> {
                     self.push(!a);
                 }
                 Put(v) => self.push(v),
-                Load(addr) => self.push(self.values & (1 << addr) > 0),
+                Load(addr) => self.push(self.values.get(addr)),
             }
         }
 
