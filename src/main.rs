@@ -1,8 +1,8 @@
 use bitvec::Bitvec;
 use bytecode::Compile;
 use output::Output;
+use rayon::prelude::*;
 use std::collections::HashMap;
-use std::sync::mpsc;
 
 mod ast;
 mod bitvec;
@@ -38,37 +38,19 @@ fn main() {
 
     let bytecode = expr.compile(&addresses);
 
-    use std::sync::mpsc::{Receiver, Sender};
-    let (sender, receiver): (Sender<(usize, bool)>, Receiver<(usize, bool)>) = mpsc::channel();
-
-    let results = evaluate(&bytecode, len, sender);
-
-    // Iterate over Receiver to get information about progress
-    for (idx, value) in receiver {
-        println!("received at {:#?}", std::time::SystemTime::now());
-    }
+    let results = evaluate(&bytecode, len);
 
     let info = Output {
         symbols,
         string,
         results,
     };
-
-    println!("Done at {:#?}", std::time::SystemTime::now());
 }
 
 /// Executes the provided function (in form of bytecode) for all possible states
-fn evaluate(
-    code: &Vec<bytecode::Code>,
-    symbol_count: usize,
-    sender: mpsc::Sender<(usize, bool)>,
-) -> Vec<bool> {
+fn evaluate(code: &Vec<bytecode::Code>, symbol_count: usize) -> Vec<bool> {
     (0usize..1 << symbol_count)
-        .map(|index| {
-            let result = stack_machine::StackMachine::new(Bitvec::new(index), code).evaluate();
-            sender.send((index, result)).unwrap();
-
-            result
-        })
+        .into_par_iter()
+        .map(|index| stack_machine::StackMachine::new(Bitvec::new(index), code).evaluate())
         .collect()
 }
