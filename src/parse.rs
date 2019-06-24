@@ -8,7 +8,7 @@ use nom::IResult;
 
 /// Parses an string slice into an Expression
 /// in form of an AST
-pub fn expression(i: &str) -> Result<Expr, ()> {
+pub fn expression(i: &str) -> Result<(String, Expr), ()> {
     // we cheat a little here by removing all whitespace beforehand
     let i: String = i
         .chars()
@@ -23,7 +23,7 @@ pub fn expression(i: &str) -> Result<Expr, ()> {
             dbg!(e);
             Err(())
         }
-        Ok((_, expr)) => Ok(expr),
+        Ok((_, (i, expr))) => Ok(expr),
     }
 }
 
