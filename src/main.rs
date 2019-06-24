@@ -1,11 +1,14 @@
 use bitvec::Bitvec;
 use bytecode::Compile;
+use output::Output;
 use std::collections::HashMap;
 use std::sync::mpsc;
+use std::time::Instant::now;
 
 mod ast;
 mod bitvec;
 mod bytecode;
+mod output;
 mod parse;
 mod stack_machine;
 
@@ -36,41 +39,37 @@ fn main() {
 
     let bytecode = expr.compile(&addresses);
 
-    struct Information {
-        symbols: Vec<String>,
-        string: String,
-        results: Vec<bool>,
-    }
-
-    let mut info = Information {
-        symbols,
-        string,
-        results: vec![false; len],
-    };
-
     use std::sync::mpsc::{Receiver, Sender};
     let (sender, receiver): (Sender<(usize, bool)>, Receiver<(usize, bool)>) = mpsc::channel();
 
-    // Iterate over Receiver to get information about progress
+    let results = evaluate(&bytecode, len, sender);
 
+    // Iterate over Receiver to get information about progress
     for (idx, value) in receiver {
-        info.results[idx] = value;
+        println!("received at {}", now());
     }
+
+    let info = Output {
+        symbols,
+        string,
+        results,
+    };
+
+    println!("Done at {}", now);
 }
 
 /// Executes the provided function (in form of bytecode) for all possible states
 fn evaluate(
-    code: &'static Vec<bytecode::Code>,
+    code: &Vec<bytecode::Code>,
     symbol_count: usize,
     sender: mpsc::Sender<(usize, bool)>,
-) -> Vec<std::thread::JoinHandle<()>> {
+) -> Vec<bool> {
     (0usize..1 << symbol_count)
         .map(|index| {
-            let sender = sender.clone();
-            std::thread::spawn(move || {
-                let result = stack_machine::StackMachine::new(Bitvec::new(index), code).evaluate();
-                sender.send((index, result)).unwrap();
-            })
+            let result = stack_machine::StackMachine::new(Bitvec::new(index), code).evaluate();
+            sender.send((index, result)).unwrap();
+
+            result
         })
         .collect()
 }
