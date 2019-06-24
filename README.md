@@ -39,7 +39,8 @@ You see what I did there, `lola` is just the short form of `logiclang`.
 - ~~implementing Parser~~
 - ~~Bytecode generation~~
 - ~~implement Stack Machine to interpret bytecode~~
-- implement evalutuation of all possible states for expression
+- ~~implement evalutuation of all possible states for expression~~
+- ~~implement parrallel evalutation~~
 - read from file
 - CLI
 - Markdown output
