@@ -19,9 +19,11 @@ fn main() {
     symbols.sort_by(|a, b| a.cmp(b));
 
     let len = symbols.len();
-    // Just don't want to do it that way around
-    if len > 128 {
-        eprintln!("This program is not suited to solve expressions with over 128 variables");
+    if len > std::mem::size_of::<usize>() * 8 {
+        eprintln!(
+            "This program is not suited to solve expressions with over {} variables",
+            std::mem::size_of::<usize>() * 8
+        );
         std::process::exit(0);
     }
 
@@ -47,7 +49,7 @@ fn main() {
     };
 
     use std::sync::mpsc::{Receiver, Sender};
-    let (sender, receiver): (Sender<(u128, bool)>, Receiver<(u128, bool)>) = mpsc::channel();
+    let (sender, receiver): (Sender<(usize, bool)>, Receiver<(usize, bool)>) = mpsc::channel();
 
     // Iterate over Receiver to get information about progress
 
@@ -60,9 +62,9 @@ fn main() {
 fn evaluate(
     code: &'static Vec<bytecode::Code>,
     symbol_count: usize,
-    sender: mpsc::Sender<(u128, bool)>,
+    sender: mpsc::Sender<(usize, bool)>,
 ) -> Vec<std::thread::JoinHandle<()>> {
-    (0u128..1 << symbol_count)
+    (0usize..1 << symbol_count)
         .map(|index| {
             let sender = sender.clone();
             std::thread::spawn(move || {

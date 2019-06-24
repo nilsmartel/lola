@@ -1,8 +1,8 @@
 #[derive(Copy, Clone, Debug)]
-pub struct Bitvec(u128);
+pub struct Bitvec(usize);
 
 impl Bitvec {
-    pub fn new(values: u128) -> Bitvec {
+    pub fn new(values: usize) -> Bitvec {
         Bitvec(values)
     }
 

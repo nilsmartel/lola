@@ -10,7 +10,7 @@ use nom::IResult;
 /// in form of an AST
 pub fn expression(i: &str) -> Result<(String, Expr), ()> {
     // we cheat a little here by removing all whitespace beforehand
-    let i: String = i
+    let string: String = i
         .chars()
         .filter(|c: &char| match c {
             ' ' | '\n' | '\r' | '\t' => false,
@@ -18,12 +18,12 @@ pub fn expression(i: &str) -> Result<(String, Expr), ()> {
         })
         .collect();
 
-    match and_tree(&i) {
+    match and_tree(&string) {
         Err(e) => {
             dbg!(e);
             Err(())
         }
-        Ok((_, (i, expr))) => Ok(expr),
+        Ok((_, expr)) => Ok((string, expr)),
     }
 }
 
