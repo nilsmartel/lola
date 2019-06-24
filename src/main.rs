@@ -3,7 +3,6 @@ use bytecode::Compile;
 use output::Output;
 use std::collections::HashMap;
 use std::sync::mpsc;
-use std::time::Instant::now;
 
 mod ast;
 mod bitvec;
@@ -46,7 +45,7 @@ fn main() {
 
     // Iterate over Receiver to get information about progress
     for (idx, value) in receiver {
-        println!("received at {}", now());
+        println!("received at {:#?}", std::time::SystemTime::now());
     }
 
     let info = Output {
@@ -55,7 +54,7 @@ fn main() {
         results,
     };
 
-    println!("Done at {}", now);
+    println!("Done at {:#?}", std::time::SystemTime::now());
 }
 
 /// Executes the provided function (in form of bytecode) for all possible states

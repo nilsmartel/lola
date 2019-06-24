@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 nom = "5.0.0-beta2"           # A byte-oriented, zero-copy, parser combinators library
+rayon = "1.1.0"               # Simple work-stealing parallelism for Rust
