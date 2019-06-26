@@ -15,7 +15,7 @@ fn main() {
     let mut input = String::new();
     let _ = std::io::stdin().read_line(&mut input);
 
-    let (string, expr) = parse::expression(&input).expect("Failed to parse expression");
+    let (equation, expr) = parse::expression(&input).expect("Failed to parse expression");
 
     let mut symbols: Vec<String> = expr.get_symbols().into_iter().collect();
     symbols.sort_by(|a, b| a.cmp(b));
@@ -42,9 +42,11 @@ fn main() {
 
     let info = Output {
         symbols,
-        string,
+        equation,
         results,
     };
+
+    println!("{}", info.fmt_csv());
 }
 
 /// Executes the provided function (in form of bytecode) for all possible states
