@@ -41,7 +41,7 @@ You see what I did there, `lola` is just the short form of `logiclang`.
 - ~~implement Stack Machine to interpret bytecode~~
 - ~~implement evalutuation of all possible states for expression~~
 - ~~implement parrallel evalutation~~
-- read from file
+- ~~read from file~~
 - CLI
 - Markdown output
 - ~~CSV output~~
