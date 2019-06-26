@@ -13,7 +13,11 @@ mod stack_machine;
 
 fn main() {
     let mut input = String::new();
-    let _ = std::io::stdin().read_line(&mut input);
+    if std::env::args().len() == 1 {
+        let _ = std::io::stdin().read_line(&mut input);
+    } else {
+        input = std::fs::read_to_string(std::env::args().nth(1).unwrap()).expect("No such file");
+    }
 
     let (equation, expr) = parse::expression(&input).expect("Failed to parse expression");
 
