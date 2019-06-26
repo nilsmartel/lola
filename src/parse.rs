@@ -19,11 +19,9 @@ pub fn expression(i: &str) -> Result<(String, Expr), ()> {
         .collect();
 
     match and_tree(&string) {
-        Err(e) => {
-            dbg!(e);
-            Err(())
-        }
-        Ok((_, expr)) => Ok((string, expr)),
+        Err(_) => Err(()),
+        // TODO handle possibility of rest
+        Ok((_, expr)) => Ok((string, dbg!(expr))),
     }
 }
 

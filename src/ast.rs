@@ -2,6 +2,7 @@ use std::collections::HashSet;
 
 type BE = Box<Expr>;
 
+#[derive(Debug)]
 pub enum Expr {
     And(BE, BE),
     Or(BE, BE),
