@@ -13,6 +13,7 @@ mod stack_machine;
 
 fn main() {
     let mut input = String::new();
+
     if std::env::args().len() == 1 {
         let _ = std::io::stdin().read_line(&mut input);
     } else {
