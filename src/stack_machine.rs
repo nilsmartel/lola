@@ -41,7 +41,7 @@ impl<'a> StackMachine<'a> {
                 Impl => {
                     let a = self.pop();
                     let b = self.pop();
-                    self.push(!a && b);
+                    self.push(!a || b);
                 }
                 Biimpl => {
                     let a = self.pop();
