@@ -7,6 +7,7 @@ pub struct Output {
     pub results: Vec<bool>,
 }
 
+// TODO directly writing to stdout would be way faster
 impl Output {
     pub fn fmt_csv(&self) -> String {
         fn string(b: bool) -> &'static str {
@@ -24,7 +25,8 @@ impl Output {
                 s += ",";
             }
 
-            s += &(result.to_string() + "\n");
+            s += string(*result);
+            s += "\n";
         }
 
         s
